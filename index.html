@@ -20,31 +20,25 @@ input {
 button {
 	margin-left: 0;
 }
+.score {
+	font-size: 2em;
+}
 </style>
 </head>
 <body>
 <h1>Shred:30 Calculator</h1>
+<div class="formula">ADDs + (ADDs / Contacts) * Unqiues</div>
 <form>
 <input type="text" name="run" id="run" size="30">
 <button>Shred</button>
 </form>
 <div>
-	Total ADDs: <span class="totaladds"></span>
-	Uniques: <span class="totaluniques"></span>
-	Contacts: <span class="totalcontacts"></span>
-	Score: <span class="total"></span>
-<!--<h3>Worlds 2016 Results <small>for reference</small></h3>
-<pre>
-1. Alex 228.375
-2. Taishi 221.125
-3. Mariusz 205.807
-4. Evan 201.103
-5. Jakub 196.742
-6. Mikko 181.067
-7. Patryk 151.3
-8. Krystof 140.8
-9. Dominik 119.846
-</pre>-->
+	<div class="adds">Total ADDs: <span class="totaladds"></span></div>
+	<div class="uni">Uniques: <span class="totaluniques"></span></div>
+	<div class="contacts">Contacts: <span class="totalcontacts"></span></div>
+	<div class="rat">Ratio: <span class="ratio"></span></div>
+	<div class="score">Score: <span class="total"></span></div>
+</div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
@@ -65,10 +59,13 @@ $('form button').on('click',function(e){
 		}
 	});
 	uniques = contacts - notunique;
-	score = totalADDs + ((totalADDs/contacts) * uniques);
+	ratio = Math.round((totalADDs / contacts)*100)/100;
+	score = totalADDs + (ratio * uniques);
+	score = Math.round(score*100)/100;
 	$('.totaladds').html(totalADDs);
 	$('.totaluniques').html(uniques);
 	$('.totalcontacts').html(contacts);
+	$('.ratio').html(ratio);
 	$('.total').html(score);
 });
 });
