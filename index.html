@@ -3,28 +3,37 @@
 <head>
 <title>Shred:30 Calculator</title>
 <meta name="viewport" content="width=device-width">
-<!--<link rel="stylesheet" href="../assets/css/bootstrap.css">
-<link rel="stylesheet" href="../assets/css/style.css">-->
 <style>
 * {
 	font-family: Helvetica;
 }
 input,
-textarea {
+textarea,
+button {
 	font-size: 16px;
 	margin: 10px;
 	padding: 10px;
+}
+input {
+	margin-right: 0;
+}
+button {
+	margin-left: 0;
 }
 </style>
 </head>
 <body>
 <h1>Shred:30 Calculator</h1>
 <form>
-<input type="number" name="run" id="run" width="60">
-<button>Process</button>
+<input type="text" name="run" id="run" size="30">
+<button>Shred</button>
 </form>
-<h2 id="total"></h2>
-<h3>Worlds 2016 Results <small>for reference</small></h3>
+<div>
+	Total ADDs: <span class="totaladds"></span>
+	Uniques: <span class="totaluniques"></span>
+	Contacts: <span class="totalcontacts"></span>
+	Score: <span class="total"></span>
+<!--<h3>Worlds 2016 Results <small>for reference</small></h3>
 <pre>
 1. Alex 228.375
 2. Taishi 221.125
@@ -35,7 +44,7 @@ textarea {
 7. Patryk 151.3
 8. Krystof 140.8
 9. Dominik 119.846
-</pre>
+</pre>-->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
@@ -43,8 +52,8 @@ $(document).ready(function(){
 $('form button').on('click',function(e){
 	e.preventDefault();
 	contacts = 0;
-    	totalADDs = 0;
-    	notunique = 0;
+	totalADDs = 0;
+	notunique = 0;
 	run = $('#run').val();
 	moves = run.split('');
 	moves.forEach(function(move){
@@ -57,7 +66,10 @@ $('form button').on('click',function(e){
 	});
 	uniques = contacts - notunique;
 	score = totalADDs + ((totalADDs/contacts) * uniques);
-	$('#total').html(score);
+	$('.totaladds').html(totalADDs);
+	$('.totaluniques').html(uniques);
+	$('.totalcontacts').html(contacts);
+	$('.total').html(score);
 });
 });
 </script>
