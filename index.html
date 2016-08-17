@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shred:30 Calculator</title>
+<meta name="viewport" content="width=device-width">
+<!--<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/style.css">-->
+<style>
+* {
+	font-family: Helvetica;
+}
+input,
+textarea {
+	font-size: 16px;
+	margin: 10px;
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+<h1>Shred:30 Calculator</h1>
+<form>
+<input type="number" name="run" id="run" width="60">
+<button>Process</button>
+</form>
+<h2 id="total"></h2>
+<h3>Worlds 2016 Results <small>for reference</small></h3>
+<pre>
+1. Alex 228.375
+2. Taishi 221.125
+3. Mariusz 205.807
+4. Evan 201.103
+5. Jakub 196.742
+6. Mikko 181.067
+7. Patryk 151.3
+8. Krystof 140.8
+9. Dominik 119.846
+</pre>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+$(document).ready(function(){
+$('form button').on('click',function(e){
+	e.preventDefault();
+	contacts = 0;
+    	totalADDs = 0;
+    	notunique = 0;
+	run = $('#run').val();
+	moves = run.split('');
+	moves.forEach(function(move){
+		if(move == 0) {
+			notunique++;
+		} else {
+			contacts++;
+			totalADDs = totalADDs + parseInt(move);
+		}
+	});
+	uniques = contacts - notunique;
+	score = totalADDs + ((totalADDs/contacts) * uniques);
+	$('#total').html(score);
+});
+});
+</script>
+</body>
+</html>
