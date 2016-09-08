@@ -51,6 +51,8 @@ $('form button').on('click',function(e){
 	run = $('#run').val();
 	moves = run.split('');
 	moves.forEach(function(move){
+		// TODO this needs to account for drops
+		// perhaps a 1 could act as a drop counter?
 		if(move == 0) {
 			notunique++;
 		} else {
