@@ -5,40 +5,53 @@
 <meta name="viewport" content="width=device-width">
 <style>
 * {
+	background: #333;
+	color: #FFF;
 	font-family: Helvetica;
+}
+h1 {
+	font-weight: 200;
 }
 input,
 textarea,
 button {
+	border: 1px solid #FFF;
 	font-size: 16px;
-	margin: 10px;
 	padding: 10px;
 }
 input {
-	margin-right: 0;
+	width: 93%;
 }
 button {
-	margin-left: 0;
+}
+.results {
+	padding: 20px;
 }
 .score {
 	font-size: 2em;
+}
+#run {
+	margin: 0 0 20px 0;
 }
 </style>
 </head>
 <body>
 <h1>Shred:30 Calculator</h1>
-<div class="formula">ADDs + (ADDs / Contacts) * Unqiues</div>
+<p>Enter each contact's ADD value; if the move is not unique, append a 0 after (e.g ripwalk > ripwalk > ripwalk > torque = 44404); drops are '1' (counted as zero-ADD contacts).</p>
 <form>
-<input type="text" name="run" id="run" size="30" pattern="[0-9]*">
-<button>Shred</button>
+<input type="number" name="run" id="run" size="30" pattern="[0-9]*" placeholder="ADDs go here: 4440404455150553330">
+<button>Calculate</button>
+<button class="reset">x</button>
 </form>
-<div>
+<div class="results">
 	<div class="adds">Total ADDs: <span class="totaladds"></span></div>
 	<div class="uni">Uniques: <span class="totaluniques"></span></div>
 	<div class="contacts">Contacts: <span class="totalcontacts"></span></div>
+	<div class="drops">Drops: <span class="totaldrops"></span></div>
 	<div class="rat">Ratio: <span class="ratio"></span></div>
 	<div class="score">Score: <span class="total"></span></div>
 </div>
+<!--<div class="formula">ADDs + (ADDs / Contacts) * Unqiues</div>-->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
@@ -46,14 +59,18 @@ $(document).ready(function(){
 $('form button').on('click',function(e){
 	e.preventDefault();
 	contacts = 0;
+	drops = 0;
 	totalADDs = 0;
 	notunique = 0;
 	run = $('#run').val();
 	moves = run.split('');
 	moves.forEach(function(move){
-		// TODO this needs to account for drops
-		// perhaps a 1 could act as a drop counter?
-		if(move == 0) {
+		// a '1' indicates a drop
+		if(move == 1) {
+			contacts++;
+			drops++;
+		// a 0 denotes that the previous trick was not unique
+		} else if(move == 0 || move == 1) {
 			notunique++;
 		} else {
 			contacts++;
@@ -67,8 +84,13 @@ $('form button').on('click',function(e){
 	$('.totaladds').html(totalADDs);
 	$('.totaluniques').html(uniques);
 	$('.totalcontacts').html(contacts);
+	$('.totaldrops').html(drops);
 	$('.ratio').html(ratio);
 	$('.total').html(score);
+});
+$('.reset').on('click', function(e){
+	e.preventDefault();
+	$('#run').val('').focus();
 });
 });
 </script>
